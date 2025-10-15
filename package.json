@@ -1,0 +1,20 @@
+{
+  "name": "mini-pos-api",
+  "version": "1.0.0",
+  "description": "Develop a Mini POS (Point of Sale) RESTful API using Node.js (Express) and MongoDB (Mongoose) with ESM",
+  "homepage": "https://github.com/Ramsan-code/mini-pos-api#readme",
+  "bugs": {
+    "url": "https://github.com/Ramsan-code/mini-pos-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ramsan-code/mini-pos-api.git"
+  },
+  "license": "ISC",
+  "author": "Ramsan",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
