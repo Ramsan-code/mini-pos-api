@@ -12,21 +12,23 @@ app.use(express.json());
 
 const connectDB = async () => {
   try {
-    await mongoose
-      .connect(process.env.MONGO_URI)
-      .then(() => console.log("conected mongodb "));
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+    });
+    console.log("conected mongodb ");
   } catch (error) {
     console.error(`error:${error}`);
+    process.exit(1);
   }
 };
-connectDB();
 
 app.get("/", (req, res) => {
   res.send("hello express");
 });
-
 app.use("/api/customers", customerRoutes);
-
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
 });
