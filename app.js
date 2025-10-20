@@ -28,8 +28,8 @@ app.get("/", (req, res) => {
 });
 app.use("/api/customers", customerRoutes);
 connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-  });
+  // app.listen(PORT, () => {
+  //   console.log(`Server running at http://localhost:${PORT}`);
+  // });
 });
 export default app;
