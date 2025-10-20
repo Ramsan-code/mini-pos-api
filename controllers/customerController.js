@@ -15,11 +15,9 @@ export const getCustomerById = async (req, res) => {
     const customerID = req.params.id;
     const findcustomer = await customer.findById(customerID);
     if (!findcustomer) {
-      return res
-        .status(404)
-        .json({
-          message: "Customer Not Found !Please Create New One ...Thank you ",
-        });
+      return res.status(404).json({
+        message: "Customer Not Found !Please Create New One ...Thank you ",
+      });
     }
     res.json(findcustomer);
   } catch (error) {
@@ -32,15 +30,20 @@ export const createCustomer = async (req, res) => {
   try {
     const customers = await customer.create(req.body);
     res.status(201).json(customers);
-    } catch (error) {
-    res.status(400).json({message:error.message})
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
 
 //<------------------update a cutomer details in their id , basic error handling , space errors  ,validation errors ------------>
-// export const updateCustomer = async (req, res) => {
-
-// };
+export const updateCustomer = async (req, res) => {
+  try {
+    const customers = await customer.updateOne(req.body);
+    res.status(201).json(customers);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 //<---------------------delete one customer in their is id , basic error handling ---------------------------->
 // export const deleteCustomer = async (req, res) => {
