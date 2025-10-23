@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import customerRoutes from "./routes/customerRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js"
 import saleRoutes from "./routes/saleRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,7 @@ const connectDB = async () => {
 app.get("/", (req, res) => {
   res.send("hello express");
 });
+app.use("/api/users", authRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/items", itemRoutes); 
 app.use("/api/sales",saleRoutes);
