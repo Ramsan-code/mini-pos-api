@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import customerRoutes from "./routes/customerRoutes.js";
+import itemRoutes from "./routes/itemRoutes.js"
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
   res.send("hello express");
 });
 app.use("/api/customers", customerRoutes);
+app.use("/api/items", itemRoutes); 
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
