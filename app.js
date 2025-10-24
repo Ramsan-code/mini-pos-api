@@ -6,12 +6,13 @@ import customerRoutes from "./routes/customerRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js"
 import saleRoutes from "./routes/saleRoutes.js"
 import authRoutes from "./routes/authRoutes.js";
-
+import cors from 'cors'
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000; 
 
 app.use(express.json());
+app.use(cors());
 
 const connectDB = async () => {
   try {
