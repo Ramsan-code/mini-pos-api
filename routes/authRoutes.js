@@ -9,10 +9,8 @@ import {
 } from "../controllers/authController.js";
 
 const router = express.Router();
-
 router.post("/register", register);
 router.post("/login", login);
-
 router.get("/", getUsers);
 router.get("/:id", getUserById);
 router.put("/:id", updateUser);
