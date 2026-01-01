@@ -25,4 +25,4 @@ const customerSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-export default mongoose.model("customer", customerSchema);
+export default mongoose.model("Customer", customerSchema);

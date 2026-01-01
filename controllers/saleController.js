@@ -3,7 +3,7 @@ import Sale from "../models/Sale.js";
 
 export const getSales = async (req, res) => {
   try {
-    const sales = await Sale.find();
+    const sales = await Sale.find().populate('customer').populate('items.item');
     res.status(200).json({ success: true, sales });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -11,7 +11,7 @@ export const getSales = async (req, res) => {
 };
 export const getSaleById = async (req, res) => {
   try {
-    const sale = await Sale.findById(req.params.id);
+    const sale = await Sale.findById(req.params.id).populate('customer').populate('items.item');
     if (!sale)
       return res
         .status(404)
@@ -24,7 +24,7 @@ export const getSaleById = async (req, res) => {
 export const createSale = async (req, res) => {
   try {
     const sale = await Sale.create(req.body);
-    res.status(201).json({ success: true, sale });
+    res.status(201).json({ success: true, message: "Sale created successfully", sale });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -39,7 +39,7 @@ export const updateSale = async (req, res) => {
       return res
         .status(404)
         .json({ success: false, message: "Sale not found" });
-    res.status(200).json({ success: true, sale });
+    res.status(200).json({ success: true, message: "Sale updated successfully", sale });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -48,11 +48,11 @@ export const updateSale = async (req, res) => {
 export const deleteSale = async (req, res) => {
   try {
     const deleted = await Sale.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ error: "Sale not found" });
+    if (!deleted) return res.status(404).json({ success: false, message: "Sale not found" });
     res
       .status(200)
-      .json({ message: "Sale deleted successfully", sale: deleted });
+      .json({ success: true, message: "Sale deleted successfully", sale: deleted });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
