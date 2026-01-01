@@ -4,9 +4,9 @@ import Customer from "../models/customer.js";
 export const getCustomers = async (req, res) => {
   try {
     const customers = await Customer.find();
-    res.status(200).json(customers);
+    res.status(200).json({ success: true, customers });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -18,16 +18,17 @@ export const getCustomerById = async (req, res) => {
     
     if (!findcustomer) {
       return res.status(404).json({
+        success: false,
         message: "Customer Not Found! Please Create New One...Thank you",
       });
     }
     
-    res.status(200).json(findcustomer);
+    res.status(200).json({ success: true, customer: findcustomer });
   } catch (error) {
     if (error.kind === 'ObjectId') {
-      return res.status(400).json({ message: "Invalid customer ID format" });
+      return res.status(400).json({ success: false, message: "Invalid customer ID format" });
     }
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -38,6 +39,7 @@ export const createCustomer = async (req, res) => {
     const savedCustomer = await newCustomer.save();
     
     res.status(201).json({
+      success: true,
       message: "Customer created successfully",
       customer: savedCustomer,
     });
@@ -45,6 +47,7 @@ export const createCustomer = async (req, res) => {
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
       return res.status(400).json({ 
+        success: false,
         message: "Validation Error", 
         errors: errors 
       });
@@ -53,11 +56,12 @@ export const createCustomer = async (req, res) => {
     if (error.code === 11000) {
       const field = Object.keys(error.keyPattern)[0];
       return res.status(409).json({ 
+        success: false,
         message: `Customer with this ${field} already exists` 
       });
     }
     
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -77,11 +81,13 @@ export const updateCustomer = async (req, res) => {
     
     if (!updatedCustomer) {
       return res.status(404).json({
+        success: false,
         message: "Customer not found"
       });
     }
     
     res.status(200).json({
+      success: true,
       message: "Customer updated successfully",
       customer: updatedCustomer
     });
@@ -90,6 +96,7 @@ export const updateCustomer = async (req, res) => {
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
       return res.status(400).json({ 
+        success: false,
         message: "Validation Error", 
         errors: errors 
       });
@@ -97,6 +104,7 @@ export const updateCustomer = async (req, res) => {
     
     if (error.kind === 'ObjectId') {
       return res.status(400).json({ 
+        success: false,
         message: "Invalid customer ID format" 
       });
     }
@@ -104,11 +112,12 @@ export const updateCustomer = async (req, res) => {
     if (error.code === 11000) {
       const field = Object.keys(error.keyPattern)[0];
       return res.status(409).json({ 
+        success: false,
         message: `Customer with this ${field} already exists` 
       });
     }
     
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -121,11 +130,13 @@ export const deleteCustomer = async (req, res) => {
     
     if (!deletedCustomer) {
       return res.status(404).json({
+        success: false,
         message: "Customer not found"
       });
     }
     
     res.status(200).json({
+      success: true,
       message: "Customer deleted successfully",
       customer: deletedCustomer
     });
@@ -133,9 +144,10 @@ export const deleteCustomer = async (req, res) => {
   } catch (error) {
     if (error.kind === 'ObjectId') {
       return res.status(400).json({ 
+        success: false,
         message: "Invalid customer ID format" 
       });
     }
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
